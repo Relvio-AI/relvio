@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit — Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      background: #080808;
+      color: #e8e8e8;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+    .setup-card {
+      background: #111;
+      border: 1px solid #1f1f1f;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+    }
+    .logo {
+      width: 40px; height: 40px;
+      background: #e8e8e8;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .logo::after {
+      content: '';
+      width: 16px; height: 16px;
+      background: #111;
+      border-radius: 50%;
+    }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+    .subtitle { color: #666; font-size: 14px; margin-bottom: 28px; }
+    .step { margin-bottom: 24px; }
+    .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .step-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 500; color: #888; flex-shrink: 0;
+    }
+    .step-title { font-size: 14px; font-weight: 500; }
+    .step-body { margin-left: 34px; color: #888; font-size: 13px; }
+    .step-body ol { padding-left: 18px; margin: 6px 0; }
+    .step-body li { margin-bottom: 4px; }
+    .step-body a { color: #7B9CFF; text-decoration: none; }
+    .step-body a:hover { text-decoration: underline; }
+    label { display: block; font-size: 12px; font-weight: 500; color: #888; margin-bottom: 4px; margin-top: 12px; }
+    input[type="text"] {
+      width: 100%; background: #0d0d0d; border: 1px solid #2a2a2a;
+      border-radius: 8px; padding: 10px 12px; font-size: 13px;
+      font-family: inherit; color: #e8e8e8; outline: none;
+    }
+    input[type="text"]:focus { border-color: #444; }
+    input[type="text"]::placeholder { color: #333; }
+    .error-msg {
+      background: #1f0d0d; border: 1px solid #3a1515; border-radius: 8px;
+      padding: 10px 14px; color: #E24B4A; font-size: 13px; margin-bottom: 16px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 20px; padding: 10px 24px;
+      background: #e8e8e8; color: #0d0d0d; border: none; border-radius: 8px;
+      font-size: 14px; font-weight: 500; font-family: inherit; cursor: pointer;
+    }
+    .btn:hover { background: #fff; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .success-banner {
+      background: #0d1f14; border: 1px solid #0d3020; border-radius: 8px;
+      padding: 10px 14px; color: #1D9E75; font-size: 13px; margin-bottom: 16px;
+    }
+    .waiting { color: #BA7517; font-size: 13px; margin-top: 14px; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .waiting span { animation: pulse 1.5s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div class="setup-card">
+    <div class="logo"></div>
+    <h1>Welcome to Orbit</h1>
+    <p class="subtitle">Connect your Gmail to get started. Takes about 2 minutes.</p>
+
+    {% if error %}
+    <div class="error-msg">{{ error }}</div>
+    {% endif %}
+
+    {% if gmail_connected %}
+    <div class="success-banner">Gmail connected! <a href="/" style="color:#1D9E75;text-decoration:underline;font-weight:500;">Open Orbit</a></div>
+    {% endif %}
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">1</span>
+        <span class="step-title">Create Google OAuth credentials</span>
+      </div>
+      <div class="step-body">
+        <ol>
+          <li>Go to <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+          <li>Create a new project (or select an existing one)</li>
+          <li>Go to <strong>APIs &amp; Services &gt; Library</strong>, search <strong>Gmail API</strong>, and enable it</li>
+          <li>Go to <strong>APIs &amp; Services &gt; Credentials</strong></li>
+          <li>Click <strong>Create Credentials &gt; OAuth 2.0 Client ID</strong></li>
+          <li>Choose <strong>Desktop app</strong> as the type</li>
+          <li>Click <strong>Create</strong> and copy the Client ID and Client Secret below</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <span class="step-num">2</span>
+        <span class="step-title">Paste credentials and connect</span>
+      </div>
+      <div class="step-body">
+        <label for="client_id">Client ID</label>
+        <input type="text" id="client_id" placeholder="123456789-xxxxx.apps.googleusercontent.com"
+               value="{{ google_client_id or '' }}">
+        <label for="client_secret">Client Secret</label>
+        <input type="text" id="client_secret" placeholder="GOCSPX-xxxxxxxxxxxxx"
+               value="{{ google_client_secret or '' }}">
+        <button class="btn" id="connect-btn" onclick="connectGmail()">Connect Gmail</button>
+        <div class="waiting" id="waiting" style="display:none;">
+          <span>Waiting for authorization... A Google sign-in page should have opened in your browser.</span>
+        </div>
+        <div class="error-msg" id="form-error" style="display:none;margin-top:14px;"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+function connectGmail() {
+  const clientId = document.getElementById('client_id').value.trim();
+  const clientSecret = document.getElementById('client_secret').value.trim();
+  const errorEl = document.getElementById('form-error');
+  errorEl.style.display = 'none';
+
+  if (!clientId || !clientSecret) {
+    errorEl.textContent = 'Both Client ID and Client Secret are required.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('connect-btn');
+  btn.disabled = true;
+  btn.textContent = 'Connecting...';
+
+  // Save credentials then start OAuth
+  const formData = new FormData();
+  formData.append('client_id', clientId);
+  formData.append('client_secret', clientSecret);
+
+  fetch('/setup', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.ok) {
+        errorEl.textContent = data.error || 'Failed to save credentials.';
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Connect Gmail';
+        return;
+      }
+      // Start OAuth flow
+      fetch('/oauth/start', { method: 'POST' });
+      document.getElementById('waiting').style.display = 'block';
+      btn.textContent = 'Waiting for Google...';
+
+      // Poll until token.json appears
+      const poll = setInterval(() => {
+        fetch('/oauth/status').then(r => r.json()).then(status => {
+          if (status.connected) {
+            clearInterval(poll);
+            window.location.href = '/';
+          }
+        });
+      }, 2000);
+    });
+}
+</script>
+</body>
+</html>

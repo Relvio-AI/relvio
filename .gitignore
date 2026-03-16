@@ -1,0 +1,13 @@
+.env
+crm.db
+*.db
+__pycache__/
+*.pyc
+.DS_Store
+token.json
+oauth_token*
+*.token
+venv/
+.venv/
+client_secret.json
+.oauth_state
