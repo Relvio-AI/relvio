@@ -4,7 +4,7 @@ Thanks for your interest in contributing! Here's how you can help.
 
 ## Reporting Bugs
 
-Open an issue on [GitHub Issues](https://github.com/Relvio-AI/relvio/issues) with:
+Open an issue on [GitHub Issues](https://github.com/b-kifle/relvio/issues) with:
 
 - A clear title describing the problem
 - Steps to reproduce the issue
