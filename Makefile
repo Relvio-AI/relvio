@@ -1,11 +1,12 @@
+SHELL := /bin/bash
 .PHONY: install run reset-db
 
 install:
-	pip install -r requirements.txt
+	python3 -m pip install -r requirements.txt
 	cp -n .env.example .env
 
 run:
-	flask run --port=$${PORT:-5000}
+	python3 app.py
 
 reset-db:
 	rm -f crm.db

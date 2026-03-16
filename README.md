@@ -11,11 +11,14 @@ Track relationships, set follow-up reminders, monitor relationship health, and i
 ```bash
 git clone https://github.com/relvio-ai/relvio.git
 cd relvio
-make install
-make run
+pip3 install -r requirements.txt
+cp -n .env.example .env
+python3 app.py
 ```
 
 Open [http://localhost:5000](http://localhost:5000) and follow the setup wizard.
+
+> **Note:** On macOS, if `make install` or `make run` fail with an `xcrun` error, use the `pip3`/`python3` commands above directly instead.
 
 ## Setup
 
